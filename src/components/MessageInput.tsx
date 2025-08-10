@@ -2,9 +2,11 @@ import React, { useState, KeyboardEvent } from 'react';
 
 interface MessageInputProps {
   onSendMessage: (content: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
+const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage ,disabled,placeholder}) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleSend = () => {
@@ -29,13 +31,14 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="输入消息..."
+          placeholder={placeholder}
           rows={1}
           style={{
             height: 'auto',
             minHeight: '20px',
             maxHeight: '120px',
           }}
+          disabled={disabled}
           onInput={(e) => {
             const target = e.target as HTMLTextAreaElement;
             target.style.height = 'auto';

@@ -21,7 +21,7 @@ const ChatInterface: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   // GraphQL mutation hook
-  const [sendMessageMutation] = useMutation<{ sendMessage: ChatResponse }, SendMessageVariables>(SEND_MESSAGE);
+  const [sendMessageMutation] = useMutation<ChatResponse, SendMessageVariables>(SEND_MESSAGE);
   
   // HTTP 客户端用于流式请求
   const httpClient = createHttpClient();
@@ -73,8 +73,8 @@ const ChatInterface: React.FC = () => {
         }
       });
 
-      if (result.data?.sendMessage.choices[0]?.message.content) {
-        return result.data.sendMessage.choices[0].message.content;
+      if (result.data?.choices[0]?.message.content) {
+        return result.data.choices[0].message.content;
       } else {
         throw new Error('未收到有效的 AI 回复');
       }
@@ -86,6 +86,7 @@ const ChatInterface: React.FC = () => {
 
   // 使用 HTTP 直接调用（用于流式响应）
   const callDeepSeekViaHTTP = async (content: string, useStream = false): Promise<string> => {
+    debugger;
     const apiMessages: ChatMessage[] = [
       {
         role: 'system',
@@ -107,7 +108,7 @@ const ChatInterface: React.FC = () => {
         top_p: 0.95,
         stream: useStream,
       });
-
+      console.log(response,111)
       return response.choices[0]?.message?.content || '抱歉，AI 服务暂时不可用。';
     } catch (error: any) {
       console.error('HTTP API 调用失败:', error);

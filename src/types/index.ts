@@ -116,7 +116,7 @@ export interface Environment {
   DEFAULT_MODEL?: string;
   MAX_TOKENS?: string;
   ALLOWED_ORIGINS?: string;
-  CHAT_HISTORY?: KVNamespace;
+  CHAT_HISTORY?: any;
 }
 
 // 流式响应处理

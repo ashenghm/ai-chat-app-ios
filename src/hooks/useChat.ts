@@ -60,6 +60,7 @@ export const useChat = (initialMessages: Message[] = []): UseChatReturn => {
 
   // 使用 HTTP 直接发送消息
   const sendMessageViaHTTP = useCallback(async (content: string): Promise<string> => {
+    debugger;
     const apiMessages: ChatMessage[] = [
       {
         role: 'system',
@@ -79,7 +80,7 @@ export const useChat = (initialMessages: Message[] = []): UseChatReturn => {
       temperature: 0.7,
       top_p: 0.95,
     });
-
+    console.log(response,111)
     return response.choices[0]?.message?.content || '抱歉，AI 服务暂时不可用。';
   }, [messages, convertToApiMessages, httpClient]);
 
