@@ -228,26 +228,32 @@ body {
   margin-bottom: 0;
 }
 
-.message-content pre {
-  background: rgba(0, 0, 0, 0.3);
+/* 代码块样式 */
+.code-block {
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   padding: 12px;
   margin: 8px 0;
   overflow-x: auto;
   font-size: 14px;
+  border: 1px solid rgba(84, 84, 88, 0.3);
 }
 
+.code-block code {
+  background: none;
+  padding: 0;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  color: #fff;
+  white-space: pre;
+}
+
+/* 行内代码样式 */
 .message-content code {
   background: rgba(0, 0, 0, 0.3);
   padding: 2px 4px;
   border-radius: 4px;
   font-size: 14px;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-}
-
-.message-content pre code {
-  background: none;
-  padding: 0;
 }
 
 .message-content blockquote {
