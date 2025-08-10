@@ -1,43 +1,98 @@
 import { gql } from '@apollo/client';
 
-// 查询所有消息
-export const GET_MESSAGES = gql`
-  query GetMessages($limit: Int, $offset: Int) {
-    messages(limit: $limit, offset: $offset) {
-      id
-      content
-      sender
+// 查询健康状态
+export const GET_HEALTH = gql`
+  query GetHealth {
+    health {
+      status
       timestamp
+      service
+      version
     }
   }
 `;
 
-// 查询单个对话的消息
-export const GET_CONVERSATION_MESSAGES = gql`
-  query GetConversationMessages($conversationId: ID!, $limit: Int, $offset: Int) {
-    conversation(id: $conversationId) {
-      id
-      messages(limit: $limit, offset: $offset) {
-        id
-        content
-        sender
-        timestamp
+// 查询聊天历史
+export const GET_CHAT_HISTORY = gql`
+  query GetChatHistory($limit: Int, $offset: Int) {
+    chatHistory(limit: $limit, offset: $offset) {
+      timestamp
+      model
+      messagesCount
+      tokensUsed {
+        prompt_tokens
+        completion_tokens
+        total_tokens
       }
     }
   }
 `;
 
-// 查询对话列表
-export const GET_CONVERSATIONS = gql`
-  query GetConversations {
-    conversations {
+// 发送消息的 Mutation
+export const SEND_MESSAGE = gql`
+  mutation SendMessage($input: ChatInput!) {
+    sendMessage(input: $input) {
       id
-      title
-      updatedAt
-      lastMessage {
-        content
-        timestamp
+      object
+      created
+      model
+      choices {
+        index
+        message {
+          role
+          content
+        }
+        finish_reason
+      }
+      usage {
+        prompt_tokens
+        completion_tokens
+        total_tokens
       }
     }
   }
+`;
+
+// Fragment 定义
+export const MESSAGE_FRAGMENT = gql`
+  fragment MessageFields on Message {
+    role
+    content
+  }
+`;
+
+export const CHOICE_FRAGMENT = gql`
+  fragment ChoiceFields on Choice {
+    index
+    message {
+      ...MessageFields
+    }
+    finish_reason
+  }
+  ${MESSAGE_FRAGMENT}
+`;
+
+export const USAGE_FRAGMENT = gql`
+  fragment UsageFields on Usage {
+    prompt_tokens
+    completion_tokens
+    total_tokens
+  }
+`;
+
+export const CHAT_RESPONSE_FRAGMENT = gql`
+  fragment ChatResponseFields on ChatResponse {
+    id
+    object
+    created
+    model
+    choices {
+      ...ChoiceFields
+    }
+    usage {
+      ...UsageFields
+    }
+  }
+  ${CHOICE_FRAGMENT}
+  ${USAGE_FRAGMENT}
 `;
