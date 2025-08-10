@@ -26,10 +26,10 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
                 const match = /language-(\w+)/.exec(className || '');
                 return !inline && match ? (
                   <SyntaxHighlighter
+                    {...(props as any)}
                     style={tomorrow}
                     language={match[1]}
                     PreTag="div"
-                    {...props}
                   >
                     {String(children).replace(/\n$/, '')}
                   </SyntaxHighlighter>
