@@ -22,14 +22,20 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "dotenv -e .env.example react-scripts start",
-    "start:dev": "dotenv -e .env react-scripts start",
+    "start": "react-scripts start",
     "start:example": "dotenv -e .env.example react-scripts start",
-    "build": "dotenv -e .env.example react-scripts build",
-    "build:prod": "dotenv -e .env.production react-scripts build",
+    "start:dev": "dotenv -e .env react-scripts start",
+    "start:prod": "dotenv -e .env.production react-scripts start",
+    "start:script": "node scripts/start-with-env.js .env.example start",
+    "build": "react-scripts build",
     "build:example": "dotenv -e .env.example react-scripts build",
+    "build:dev": "dotenv -e .env react-scripts build",
+    "build:prod": "dotenv -e .env.production react-scripts build",
+    "build:script": "node scripts/start-with-env.js .env.example build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "env:copy": "cp .env.example .env",
+    "env:setup": "npm run env:copy && npm start"
   },
   "eslintConfig": {
     "extends": [
