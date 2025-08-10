@@ -48,6 +48,47 @@ body {
   margin: 0;
 }
 
+/* 错误提示横幅 */
+.error-banner {
+  background: rgba(255, 59, 48, 0.9);
+  color: white;
+  padding: 8px 12px;
+  margin-top: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  animation: slideIn 0.3s ease-out;
+}
+
+.error-text {
+  flex: 1;
+}
+
+.error-close {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 8px;
+  opacity: 0.8;
+}
+
+.error-banner:hover {
+  background: rgba(255, 59, 48, 1);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .chat-messages {
   flex: 1;
   overflow-y: auto;
@@ -131,6 +172,11 @@ body {
   border-radius: 20px;
   padding: 8px;
   min-height: 44px;
+  position: relative;
+}
+
+.chat-input-wrapper.disabled {
+  opacity: 0.6;
 }
 
 .chat-input {
@@ -150,6 +196,10 @@ body {
   color: rgba(235, 235, 245, 0.6);
 }
 
+.chat-input:disabled {
+  color: rgba(235, 235, 245, 0.4);
+}
+
 .send-button {
   width: 28px;
   height: 28px;
@@ -165,7 +215,7 @@ body {
   transition: background-color 0.2s;
 }
 
-.send-button:hover {
+.send-button:hover:not(:disabled) {
   background: #0056CC;
 }
 
@@ -256,6 +306,11 @@ body {
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
 }
 
+.message-content pre code {
+  background: none;
+  padding: 0;
+}
+
 .message-content blockquote {
   border-left: 3px solid rgba(235, 235, 245, 0.3);
   padding-left: 12px;
@@ -300,4 +355,65 @@ body {
   color: rgba(235, 235, 245, 0.6);
   margin-top: 4px;
   text-align: center;
+}
+
+/* 加载状态 */
+.loading-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(235, 235, 245, 0.6);
+  font-size: 14px;
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(235, 235, 245, 0.2);
+  border-top: 2px solid rgba(235, 235, 245, 0.6);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .chat-container {
+    max-width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+  
+  .message-bubble {
+    max-width: calc(100vw - 120px);
+  }
+}
+
+/* 状态指示器 */
+.connection-status {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #30D158;
+}
+
+.connection-status.disconnected {
+  background: #FF3B30;
+}
+
+.connection-status.connecting {
+  background: #FF9500;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
